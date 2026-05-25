@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { stripBase } from '../lib/config';
 import { Menu, X } from 'lucide-react';
 import ThemeToggle from './ThemeToggle';
 
@@ -26,8 +27,10 @@ export default function Navbar() {
     setIsOpen(false);
   }, [location.pathname]);
 
-  const isActive = (path: string) =>
-    path === '/' ? location.pathname === '/' : location.pathname.startsWith(path);
+  const isActive = (path: string) => {
+    const p = stripBase(location.pathname);
+    return path === '/' ? p === '/' : p.startsWith(path);
+  };
 
   return (
     <nav
